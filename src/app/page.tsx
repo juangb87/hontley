@@ -1,26 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const BOOKING_URL = "mailto:hello@hontley.com";
-
-const STEPS = [
-  {
-    n: "01",
-    title: "Discovery Call",
-    desc: "30 minutes. We learn your business, your customers, and the problems worth solving.",
-  },
-  {
-    n: "02",
-    title: "We Build It",
-    desc: "3–5 days. We configure your AI assistant: personality, knowledge, and integrations.",
-  },
-  {
-    n: "03",
-    title: "Go Live",
-    desc: "Your assistant starts working on WhatsApp (or your preferred channel). We onboard your team and stay available for 30 days.",
-  },
-];
 
 const PORTFOLIO = [
   {
@@ -50,6 +33,24 @@ const PORTFOLIO = [
     url: "https://galeonica.com",
     industry: "B2B Fintech",
     desc: "AI concierge for a white-label cashback infrastructure platform — handling partner onboarding and support.",
+  },
+];
+
+const STEPS = [
+  {
+    n: "01",
+    title: "Discovery Call",
+    desc: "30 minutes. We learn your business, your customers, and the problems worth solving.",
+  },
+  {
+    n: "02",
+    title: "We Build It",
+    desc: "3–5 days. We configure your AI assistant: personality, knowledge, and integrations.",
+  },
+  {
+    n: "03",
+    title: "Go Live",
+    desc: "Your assistant starts working on WhatsApp (or your preferred channel). We onboard your team and stay available for 30 days.",
   },
 ];
 
@@ -100,7 +101,37 @@ const PLANS = [
   },
 ];
 
+function DarkModeToggle({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
+  return (
+    <button
+      onClick={onToggle}
+      aria-label="Toggle dark mode"
+      className="w-9 h-9 flex items-center justify-center rounded-lg transition"
+      style={{ border: "1px solid var(--hontley-border)", color: "var(--hontley-muted)" }}
+    >
+      {dark ? "☀️" : "🌙"}
+    </button>
+  );
+}
+
 export default function Home() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("hontley-dark");
+    if (stored === "true") {
+      setDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleDark = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("hontley-dark", String(next));
+  };
+
   return (
     <main className="min-h-screen" style={{ background: "var(--background)", color: "var(--foreground)" }}>
 
@@ -109,13 +140,16 @@ export default function Home() {
         <span className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--hontley-black)", letterSpacing: "-0.03em" }}>
           Hontley
         </span>
-        <a
-          href={BOOKING_URL}
-          className="text-sm font-semibold px-4 py-2 rounded-lg transition"
-          style={{ background: "var(--hontley-accent)", color: "#fff" }}
-        >
-          Book a Free Call
-        </a>
+        <div className="flex items-center gap-3">
+          <DarkModeToggle dark={dark} onToggle={toggleDark} />
+          <a
+            href={BOOKING_URL}
+            className="text-sm font-semibold px-4 py-2 rounded-lg transition"
+            style={{ background: "var(--hontley-accent)", color: "#fff" }}
+          >
+            Book a Free Call
+          </a>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -152,17 +186,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SOCIAL PROOF / QUOTE */}
+      {/* TESTIMONIAL */}
       <section className="max-w-3xl mx-auto px-6 pb-16">
         <div
           className="rounded-2xl p-6 text-center"
           style={{ background: "var(--hontley-gray)", borderLeft: "4px solid var(--hontley-accent)" }}
         >
           <p className="text-lg italic" style={{ color: "var(--foreground)" }}>
-            &ldquo;Time to make an oyster ordering chef concierge robot 🙂&rdquo;
+            &ldquo;We use it for project management, material inventory, build-out timelines, take-downs, and time tracking for the whole crew. It&apos;s like having an operations manager that never sleeps.&rdquo;
           </p>
-          <p className="mt-2 text-sm font-medium" style={{ color: "var(--hontley-muted)" }}>
-            — Ross, Everglades Oysters (first Hontley client)
+          <p className="mt-3 text-sm font-medium" style={{ color: "var(--hontley-muted)" }}>
+            — Harvey, <a href="https://arcabuild.co" target="_blank" rel="noopener noreferrer" className="hover:underline">Arca Build</a>
           </p>
         </div>
       </section>
@@ -186,12 +220,12 @@ export default function Home() {
               <Image
                 src={p.logo}
                 alt={p.name}
-                width={40}
-                height={40}
+                width={48}
+                height={48}
                 className="rounded-xl shrink-0 mt-0.5 object-cover"
               />
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-bold text-base group-hover:underline">{p.name}</span>
                   <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--hontley-gray)", color: "var(--hontley-muted)" }}>
                     {p.industry}
@@ -210,10 +244,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {STEPS.map((s) => (
             <div key={s.n} className="text-center space-y-3">
-              <div
-                className="text-4xl font-black"
-                style={{ color: "var(--hontley-accent)" }}
-              >
+              <div className="text-4xl font-black" style={{ color: "var(--hontley-accent)" }}>
                 {s.n}
               </div>
               <h3 className="text-lg font-semibold">{s.title}</h3>
@@ -226,10 +257,7 @@ export default function Home() {
       </section>
 
       {/* USE CASES */}
-      <section
-        className="py-16"
-        style={{ background: "var(--hontley-gray)" }}
-      >
+      <section className="py-16" style={{ background: "var(--hontley-gray)" }}>
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-4">Built for businesses that run on relationships</h2>
           <p className="text-center mb-10" style={{ color: "var(--hontley-muted)" }}>
@@ -266,9 +294,7 @@ export default function Home() {
               key={p.name}
               className="rounded-2xl p-6 flex flex-col gap-4"
               style={{
-                border: p.highlight
-                  ? "2px solid var(--hontley-accent)"
-                  : "1px solid var(--hontley-border)",
+                border: p.highlight ? "2px solid var(--hontley-accent)" : "1px solid var(--hontley-border)",
                 background: p.highlight ? "var(--hontley-gray)" : "var(--background)",
               }}
             >
@@ -312,10 +338,7 @@ export default function Home() {
       </section>
 
       {/* CTA FOOTER */}
-      <section
-        className="py-16 text-center"
-        style={{ background: "var(--hontley-accent)" }}
-      >
+      <section className="py-16 text-center" style={{ background: "var(--hontley-accent)" }}>
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-white mb-4">
             Ready to meet your AI concierge?
@@ -334,8 +357,8 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between text-sm" style={{ color: "var(--hontley-muted)" }}>
-        <span className="font-bold" style={{ color: "var(--hontley-accent)" }}>Hontley</span>
+      <footer className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between text-sm flex-wrap gap-4" style={{ color: "var(--hontley-muted)" }}>
+        <span className="font-bold text-lg" style={{ color: "var(--hontley-black)", letterSpacing: "-0.03em" }}>Hontley</span>
         <span>© {new Date().getFullYear()} Hontley. All rights reserved.</span>
         <a href={BOOKING_URL} className="hover:underline">hello@hontley.com</a>
       </footer>
