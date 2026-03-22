@@ -1,360 +1,276 @@
-
 "use client";
 
-import Image from "next/image";
-import Script from "next/script";
-import { useEffect, useMemo, useState } from "react";
-import DarkModeToggle from "../components/DarkModeToggle";
-import { FaGithub, FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";
-
+const BOOKING_URL = "mailto:hello@hontley.com";
 const EXT = "noopener noreferrer";
 
-const BUMBEI_ICON = "/bumbei-favicon.png";
-const LIGHTSATS_ICON = "/lightsats-favicon.png";
+const STEPS = [
+  {
+    n: "01",
+    title: "Discovery Call",
+    desc: "30 minutes. We learn your business, your customers, and the problems worth solving.",
+  },
+  {
+    n: "02",
+    title: "We Build It",
+    desc: "3–5 days. We configure your AI assistant: personality, knowledge, and integrations.",
+  },
+  {
+    n: "03",
+    title: "Go Live",
+    desc: "Your assistant starts working on WhatsApp (or your preferred channel). We onboard your team and stay available for 30 days.",
+  },
+];
 
-const INSTAGRAM_URL = "https://instagram.com/juan.sebastiaan_";
-const NOSTR_URL =
-  "https://primal.net/p/nprofile1qqsdytmthzk65zndqnqa0ax4jfqwu7wk8wvpsr5qm9a8n8mrz53q8qch6lk0x";
+const USE_CASES = [
+  { emoji: "🦪", label: "Food & Wholesale", desc: "Orders, availability, delivery scheduling" },
+  { emoji: "🏡", label: "Real Estate", desc: "Lead qualification & showing bookings" },
+  { emoji: "💆", label: "Service Businesses", desc: "Salons, clinics, fitness studios" },
+  { emoji: "🛒", label: "E-commerce", desc: "Order support, FAQs, returns" },
+  { emoji: "🎪", label: "Events & Venues", desc: "Inquiries, quotes, bookings" },
+  { emoji: "🤝", label: "B2B Sales", desc: "Lead intake, follow-ups, demos" },
+];
 
-type Lang = "es" | "en";
-
-function NostrIcon() {
-  // Simple Nostr-style purple circle with an "n" mark (works without extra deps)
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="11" fill="#8A2BE2" />
-      <path
-        d="M8.5 16.8V7.2h2.1v1c.5-.8 1.4-1.2 2.6-1.2 2 0 3.3 1.2 3.3 3.5v6.3h-2.1v-6c0-1.2-.6-1.9-1.8-1.9-1.2 0-2 .8-2 2.1v5.8H8.5Z"
-        fill="white"
-      />
-    </svg>
-  );
-}
+const PLANS = [
+  {
+    name: "Starter",
+    price: "$500",
+    features: [
+      "1 channel (WhatsApp or Telegram)",
+      "Custom personality & FAQs",
+      "Order / inquiry intake",
+      "14 days of support",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Standard",
+    price: "$1,000",
+    features: [
+      "1–2 channels",
+      "Custom personality + integrations",
+      "Order intake + escalation logic",
+      "Team onboarding session",
+      "30 days of support",
+    ],
+    highlight: true,
+  },
+  {
+    name: "Premium",
+    price: "$1,500+",
+    features: [
+      "Multi-channel setup",
+      "Advanced workflows",
+      "CRM / Sheets integration",
+      "Full team onboarding",
+      "30 days of support",
+    ],
+    highlight: false,
+  },
+];
 
 export default function Home() {
-  const [lang, setLang] = useState<Lang>("es");
-
-  useEffect(() => {
-    const stored = (localStorage.getItem("lang") as Lang | null) ?? null;
-    if (stored === "es" || stored === "en") setLang(stored);
-  }, []);
-
-  const t = useMemo(() => {
-    const dict = {
-      es: {
-        heroTitle: "Hola, soy Juan 👋",
-        heroSubtitle:
-          "Construyo productos digitales que conectan tecnología con libertad financiera.",
-        heroMeta: "Full-time en FlexOffers · Founder construyendo Bumbei",
-        ctaContact: "Contactar",
-        ctaProjects: "Ver proyectos",
-        projectsTitle: "🚀 Proyectos",
-        aboutTitle: "👨‍💻 Sobre mí",
-        aboutP1:
-          "Fundador de Bumbei, una plataforma que permite ganar satoshis por comprar en línea. Apasionado por Bitcoin, productos digitales y la educación financiera para todos.",
-        aboutP2:
-          "También co-creador de Lightsats, un proyecto que ganó 1 BTC en un hackathon por hacer onboarding a nuevos usuarios de Bitcoin de forma amigable.",
-        partnerships:
-          "🤝 Partnerships: Creadores y marcas — campañas con deeplinks + tracking.",
-      },
-      en: {
-        heroTitle: "Hi, I'm Juan 👋",
-        heroSubtitle:
-          "I build digital products that connect technology with financial freedom.",
-        heroMeta: "Full-time at FlexOffers · Founder building Bumbei",
-        ctaContact: "Contact",
-        ctaProjects: "See projects",
-        projectsTitle: "🚀 Projects",
-        aboutTitle: "👨‍💻 About",
-        aboutP1:
-          "Founder of Bumbei — earn satoshis when you shop online. Passionate about Bitcoin, digital products, and financial education.",
-        aboutP2:
-          "Co-creator of Lightsats — a project that won 1 BTC in a hackathon by onboarding new Bitcoin users in a friendly way.",
-        partnerships:
-          "🤝 Partnerships: Creators & brands — campaigns with deeplinks + tracking.",
-      },
-    } as const;
-
-    return dict[lang];
-  }, [lang]);
-
-  const setLanguage = (next: Lang) => {
-    setLang(next);
-    localStorage.setItem("lang", next);
-  };
-
   return (
-    <main className="min-h-screen bg-background text-foreground px-4 sm:px-6 py-10 sm:py-14">
-      <div className="max-w-3xl mx-auto">
-        {/* Top bar */}
-        <div className="flex items-center justify-between gap-4 mb-8">
-          <div className="flex gap-2">
-            <button
-              onClick={() => setLanguage("es")}
-              className={`px-3 py-1 text-sm border rounded-full transition ${
-                lang === "es"
-                  ? "border-[color:var(--bumbei-orange)]"
-                  : "border-[color:var(--bumbei-light-gray)]"
-              } hover:bg-[color:var(--bumbei-light-gray)]/30`}
-              aria-label="Español"
-              type="button"
-            >
-              🇪🇸 ES
-            </button>
-            <button
-              onClick={() => setLanguage("en")}
-              className={`px-3 py-1 text-sm border rounded-full transition ${
-                lang === "en"
-                  ? "border-[color:var(--bumbei-orange)]"
-                  : "border-[color:var(--bumbei-light-gray)]"
-              } hover:bg-[color:var(--bumbei-light-gray)]/30`}
-              aria-label="English"
-              type="button"
-            >
-              🇺🇸 EN
-            </button>
-          </div>
-          <DarkModeToggle />
+    <main className="min-h-screen" style={{ background: "var(--background)", color: "var(--foreground)" }}>
+
+      {/* NAV */}
+      <nav className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+        <span className="text-xl font-bold tracking-tight" style={{ color: "var(--hontley-accent)" }}>
+          Hontley
+        </span>
+        <a
+          href={BOOKING_URL}
+          className="text-sm font-semibold px-4 py-2 rounded-lg transition"
+          style={{ background: "var(--hontley-accent)", color: "#fff" }}
+        >
+          Book a Free Call
+        </a>
+      </nav>
+
+      {/* HERO */}
+      <section className="max-w-4xl mx-auto px-6 pt-16 pb-20 text-center">
+        <div
+          className="inline-block text-sm font-medium px-3 py-1 rounded-full mb-6"
+          style={{ background: "var(--hontley-gray)", color: "var(--hontley-accent)" }}
+        >
+          🤖 AI Concierge Setup for Small Businesses
         </div>
-
-        {/* Hero */}
-        <section className="text-center space-y-4">
-          <div className="mx-auto w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden ring-4 ring-gray-200 dark:ring-gray-800">
-            <Image
-              src="/avatar.jpeg"
-              alt="Juan Gómez"
-              width={256}
-              height={256}
-              priority
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-            {t.heroTitle}
-          </h1>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-            {t.heroSubtitle}
-          </p>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-            {t.heroMeta}
-          </p>
-
-          <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
-            <a
-              href="mailto:juan@bumbei.com"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[color:var(--bumbei-orange)] text-[color:var(--bumbei-black)] hover:brightness-95 transition font-semibold"
-            >
-              {t.ctaContact}
-            </a>
-            <a
-              href="#proyectos"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-[color:var(--bumbei-light-gray)] hover:bg-[color:var(--bumbei-light-gray)]/30 transition"
-            >
-              {t.ctaProjects}
-            </a>
-          </div>
-        </section>
-
-        {/* Proyectos */}
-        <section id="proyectos" className="mt-12 sm:mt-16">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-            {t.projectsTitle}
-          </h2>
-
-          <div className="grid grid-cols-1 gap-4">
-            <a
-              href="https://bumbei.com?utm_source=juanpage&utm_medium=personal_site&utm_campaign=homepage&r=a3b4c5d6"
-              target="_blank"
-              rel={EXT}
-              className="group rounded-2xl border border-[color:var(--bumbei-light-gray)] p-5 hover:bg-[color:var(--bumbei-light-gray)]/20 transition"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex gap-3">
-                  <Image
-                    src={BUMBEI_ICON}
-                    alt="Bumbei logo"
-                    width={28}
-                    height={28}
-                    className="rounded shrink-0 object-contain"
-                  />
-                  <div>
-                    <div className="text-lg font-semibold group-hover:underline">
-                      Bumbei
-                    </div>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                      {lang === "es"
-                        ? "Cashback en Bitcoin al comprar online."
-                        : "Bitcoin cashback when you shop online."}
-                    </p>
-                  </div>
-                </div>
-                <span className="text-sm text-gray-400">↗</span>
-              </div>
-            </a>
-
-            <a
-              href="https://galeonica.com?utm_source=juanpage&utm_medium=personal_site&utm_campaign=homepage"
-              target="_blank"
-              rel={EXT}
-              className="group rounded-2xl border border-[color:var(--bumbei-light-gray)] p-5 hover:bg-[color:var(--bumbei-light-gray)]/20 transition"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[color:var(--bumbei-orange)]/90 text-[color:var(--bumbei-black)] flex items-center justify-center font-semibold shrink-0">
-                    G
-                  </div>
-                  <div>
-                    <div className="text-lg font-semibold group-hover:underline">
-                      Galeonica
-                    </div>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                      {lang === "es"
-                        ? "Infraestructura B2B de cashback y programas white-label."
-                        : "B2B cashback infrastructure and white-label rewards."}
-                    </p>
-                  </div>
-                </div>
-                <span className="text-sm text-gray-400">↗</span>
-              </div>
-            </a>
-
-            <a
-              href="https://lightsats.com"
-              target="_blank"
-              rel={EXT}
-              className="group rounded-2xl border border-[color:var(--bumbei-light-gray)] p-5 hover:bg-[color:var(--bumbei-light-gray)]/20 transition"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex gap-3">
-                  <Image
-                    src={LIGHTSATS_ICON}
-                    alt="Lightsats logo"
-                    width={28}
-                    height={28}
-                    className="rounded shrink-0 object-contain"
-                  />
-                  <div>
-                    <div className="text-lg font-semibold group-hover:underline">
-                      Lightsats
-                    </div>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                      {lang === "es"
-                        ? "Enseña Bitcoin con pequeños incentivos."
-                        : "Teach Bitcoin with small incentives."}
-                    </p>
-                  </div>
-                </div>
-                <span className="text-sm text-gray-400">↗</span>
-              </div>
-            </a>
-          </div>
-        </section>
-
-        {/* Sobre mí */}
-        <section className="mt-12 sm:mt-16">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3">
-            {t.aboutTitle}
-          </h2>
-          <div className="space-y-3 text-gray-700 dark:text-gray-300 leading-relaxed">
-            <p>{t.aboutP1}</p>
-            <p>{t.aboutP2}</p>
-          </div>
-        </section>
-
-        {/* Partnerships + Contacto */}
-        <section className="mt-12 sm:mt-16 text-center">
-          <p className="text-base sm:text-lg font-medium">{t.partnerships}</p>
-
+        <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+          Your AI concierge,<br />
+          <span style={{ color: "var(--hontley-accent)" }}>ready in days.</span>
+        </h1>
+        <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-8" style={{ color: "var(--hontley-muted)" }}>
+          We set up a custom AI assistant for your business on WhatsApp, Telegram, or SMS —
+          so your team can focus on what actually matters.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
           <a
-            href="mailto:juan@bumbei.com"
-            className="inline-flex items-center justify-center mt-4 px-6 py-3 rounded-xl bg-[color:var(--bumbei-orange)] text-[color:var(--bumbei-black)] hover:brightness-95 transition font-semibold"
+            href={BOOKING_URL}
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-base transition hover:brightness-110"
+            style={{ background: "var(--hontley-accent)", color: "#fff" }}
           >
-            juan@bumbei.com
+            Book a Free Discovery Call →
           </a>
+          <a
+            href="#how-it-works"
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-base transition"
+            style={{ border: "1px solid var(--hontley-border)", color: "var(--hontley-muted)" }}
+          >
+            See how it works
+          </a>
+        </div>
+      </section>
 
-          {/* Lightning (TwentyUno) */}
-          <div className="mt-8 flex justify-center">
-            <div className="w-full max-w-sm">
-              <lightning-widget
-                name="Juan"
-                accent="#fc6a42"
-                to="juangb87@cash.app"
-                image="/avatar.jpeg"
-              />
-              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                {lang === "es"
-                  ? "Tips en sats via Lightning"
-                  : "Tip in sats via Lightning"}
+      {/* SOCIAL PROOF / QUOTE */}
+      <section className="max-w-3xl mx-auto px-6 pb-16">
+        <div
+          className="rounded-2xl p-6 text-center"
+          style={{ background: "var(--hontley-gray)", borderLeft: "4px solid var(--hontley-accent)" }}
+        >
+          <p className="text-lg italic" style={{ color: "var(--foreground)" }}>
+            &ldquo;Time to make an oyster ordering chef concierge robot 🙂&rdquo;
+          </p>
+          <p className="mt-2 text-sm font-medium" style={{ color: "var(--hontley-muted)" }}>
+            — Ross, Everglades Oysters (first Hontley client)
+          </p>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="how-it-works" className="max-w-5xl mx-auto px-6 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">How it works</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {STEPS.map((s) => (
+            <div key={s.n} className="text-center space-y-3">
+              <div
+                className="text-4xl font-black"
+                style={{ color: "var(--hontley-accent)" }}
+              >
+                {s.n}
+              </div>
+              <h3 className="text-lg font-semibold">{s.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--hontley-muted)" }}>
+                {s.desc}
               </p>
             </div>
-          </div>
+          ))}
+        </div>
+      </section>
 
-          <div className="mt-8 flex justify-center gap-6 text-2xl">
-            <a
-              href="https://twitter.com/juansebastiangb"
-              target="_blank"
-              rel={EXT}
-              aria-label="X/Twitter"
-              className="text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href="https://github.com/juangb87"
-              target="_blank"
-              rel={EXT}
-              aria-label="GitHub"
-              className="text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition"
-            >
-              <FaGithub />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/juan-gomez-flexoffers/"
-              target="_blank"
-              rel={EXT}
-              aria-label="LinkedIn"
-              className="text-gray-500 dark:text-gray-300 hover:text-[color:var(--bumbei-blue)] transition"
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel={EXT}
-              aria-label="Instagram"
-              className="text-gray-500 dark:text-gray-300 hover:text-[color:var(--bumbei-orange)] transition"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href={NOSTR_URL}
-              target="_blank"
-              rel={EXT}
-              aria-label="Nostr"
-              className="text-gray-500 dark:text-gray-300 hover:text-[color:var(--bumbei-purple, var(--bumbei-blue))] transition"
-            >
-              <NostrIcon />
-            </a>
-          </div>
-
-          <p className="mt-8 text-xs text-gray-400">
-            © {new Date().getFullYear()} Juan Gómez
+      {/* USE CASES */}
+      <section
+        className="py-16"
+        style={{ background: "var(--hontley-gray)" }}
+      >
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-4">Built for businesses that run on relationships</h2>
+          <p className="text-center mb-10" style={{ color: "var(--hontley-muted)" }}>
+            If your customers message you to ask questions, place orders, or book appointments — we can automate that.
           </p>
-        </section>
-        {/* TwentyUno web component loader */}
-        <Script
-          src="https://embed.twentyuno.net/js/app.js"
-          strategy="afterInteractive"
-        />
-      </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {USE_CASES.map((uc) => (
+              <div
+                key={uc.label}
+                className="rounded-xl p-5 space-y-1"
+                style={{ background: "var(--background)", border: "1px solid var(--hontley-border)" }}
+              >
+                <div className="text-2xl">{uc.emoji}</div>
+                <div className="font-semibold text-sm">{uc.label}</div>
+                <div className="text-xs" style={{ color: "var(--hontley-muted)" }}>{uc.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <h2 className="text-3xl font-bold text-center mb-4">Pricing</h2>
+        <p className="text-center mb-2" style={{ color: "var(--hontley-muted)" }}>
+          One-time setup fee. Your AI costs go directly to the provider (~$30–60/mo).
+        </p>
+        <p className="text-center text-sm mb-10" style={{ color: "var(--hontley-muted)" }}>
+          No hidden markup. Full transparency.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {PLANS.map((p) => (
+            <div
+              key={p.name}
+              className="rounded-2xl p-6 flex flex-col gap-4"
+              style={{
+                border: p.highlight
+                  ? "2px solid var(--hontley-accent)"
+                  : "1px solid var(--hontley-border)",
+                background: p.highlight ? "var(--hontley-gray)" : "var(--background)",
+              }}
+            >
+              {p.highlight && (
+                <div
+                  className="text-xs font-bold uppercase tracking-widest px-2 py-1 rounded-full self-start"
+                  style={{ background: "var(--hontley-accent)", color: "#fff" }}
+                >
+                  Most Popular
+                </div>
+              )}
+              <div>
+                <div className="text-lg font-bold">{p.name}</div>
+                <div className="text-3xl font-extrabold mt-1">{p.price}</div>
+              </div>
+              <ul className="space-y-2 flex-1">
+                {p.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm" style={{ color: "var(--hontley-muted)" }}>
+                    <span style={{ color: "var(--hontley-accent)" }}>✓</span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={BOOKING_URL}
+                className="text-center text-sm font-semibold py-2.5 rounded-lg transition"
+                style={
+                  p.highlight
+                    ? { background: "var(--hontley-accent)", color: "#fff" }
+                    : { border: "1px solid var(--hontley-border)", color: "var(--foreground)" }
+                }
+              >
+                Get Started
+              </a>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm mt-6" style={{ color: "var(--hontley-muted)" }}>
+          Need ongoing improvements? Monthly maintenance from $200/mo.
+        </p>
+      </section>
+
+      {/* CTA FOOTER */}
+      <section
+        className="py-16 text-center"
+        style={{ background: "var(--hontley-accent)" }}
+      >
+        <div className="max-w-2xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Ready to meet your AI concierge?
+          </h2>
+          <p className="text-indigo-200 mb-8">
+            Book a free 30-minute call. No commitment. We&apos;ll tell you exactly what we&apos;d build for you.
+          </p>
+          <a
+            href={BOOKING_URL}
+            className="inline-flex items-center justify-center px-8 py-4 rounded-xl font-bold text-base transition hover:brightness-110"
+            style={{ background: "#fff", color: "var(--hontley-accent)" }}
+          >
+            Book Your Free Call →
+          </a>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between text-sm" style={{ color: "var(--hontley-muted)" }}>
+        <span className="font-bold" style={{ color: "var(--hontley-accent)" }}>Hontley</span>
+        <span>© {new Date().getFullYear()} Hontley. All rights reserved.</span>
+        <a href={BOOKING_URL} className="hover:underline">hello@hontley.com</a>
+      </footer>
+
     </main>
   );
 }
