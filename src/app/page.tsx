@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-const BOOKING_URL = "https://wa.me/573106460010?text=Hola%20Pacho%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20bot%20con%20OpenClaw%20para%20mi%20negocio";
+const BOOKING_URL = "https://wa.me/573106460010?text=Hola%20Pacho%2C%20quiero%20informaci%C3%B3n%20sobre%20automatizaci%C3%B3n%20de%20procesos%20y%20canales%20para%20mi%20negocio";
 const CONTACT_LABEL = "WhatsApp: +57 310 6460010";
 
 const PORTFOLIO = [
@@ -12,91 +12,89 @@ const PORTFOLIO = [
     logo: "/logo-arca.jpg",
     url: "https://arcabuild.co",
     industry: "Construcción",
-    desc: "Asistente de IA para una empresa de construcción modular, atendiendo solicitudes, procesos operativos y coordinación interna.",
+    desc: "Automatización de procesos operativos, coordinación interna y gestión de solicitudes para una empresa de construcción modular.",
   },
   {
     name: "Home Inspections Halley",
     logo: "/logo-halley.jpg",
     url: "https://homeinspectionshalley.com",
     industry: "Servicios inmobiliarios",
-    desc: "Concierge de IA para un inspector certificado en Miami, agendando inspecciones y resolviendo dudas de compradores 24/7.",
+    desc: "Sistema de atención y agendamiento para inspecciones, con respuestas automáticas y filtro de prospectos.",
   },
   {
     name: "Bumbei",
     logo: "/logo-bumbei.jpg",
     url: "https://bumbei.com",
     industry: "Fintech",
-    desc: "Asistente de IA para una plataforma de cashback en Bitcoin, dando soporte a usuarios y partners por varios canales.",
+    desc: "Automatización de soporte y comunicación para usuarios y partners a través de múltiples canales.",
   },
   {
     name: "Galeonica",
     logo: "/logo-galeonica.jpg",
     url: "https://galeonica.com",
     industry: "Fintech B2B",
-    desc: "Concierge de IA para una plataforma white-label de cashback, apoyando onboarding de partners y soporte comercial.",
+    desc: "Procesos automatizados para onboarding comercial, soporte y operación con partners.",
   },
 ];
 
 const STEPS = [
   {
     n: "01",
-    title: "Llamada de diagnóstico",
-    desc: "30 minutos. Entendemos tu negocio, cómo te escriben tus clientes y qué vale la pena automatizar.",
+    title: "Diagnóstico del negocio",
+    desc: "Revisamos tus procesos, tus canales de comunicación y detectamos dónde estás perdiendo tiempo, dinero o velocidad.",
   },
   {
     n: "02",
-    title: "Configuramos tu bot",
-    desc: "En pocos días dejamos listo tu asistente con OpenClaw: personalidad, base de conocimiento, flujos e integraciones.",
+    title: "Diseño e implementación",
+    desc: "Construimos la automatización, definimos flujos, conectamos herramientas y dejamos todo listo para operar.",
   },
   {
     n: "03",
-    title: "Sales en vivo",
-    desc: "Tu bot empieza a atender en WhatsApp, Telegram o el canal que uses. Entrenamos a tu equipo y te acompañamos en el arranque.",
+    title: "Salida en vivo",
+    desc: "Lanzamos, probamos contigo y afinamos lo necesario para que el sistema empiece a trabajar desde el día uno.",
   },
 ];
 
 const USE_CASES = [
-  { emoji: "🍽️", label: "Restaurantes y pedidos", desc: "Reservas, menús, pedidos y preguntas frecuentes" },
-  { emoji: "🏡", label: "Inmobiliarias", desc: "Calificación de leads y agenda de visitas" },
-  { emoji: "💆", label: "Negocios de servicios", desc: "Clínicas, salones, spas, gimnasios" },
-  { emoji: "🛒", label: "E-commerce", desc: "Soporte, estado de órdenes y devoluciones" },
-  { emoji: "🎓", label: "Educación y cursos", desc: "Información, registro y seguimiento" },
-  { emoji: "🤝", label: "Ventas B2B", desc: "Captura de leads, filtros y agendamiento" },
+  { emoji: "💬", label: "Canales de atención", desc: "WhatsApp, formularios, correo, chat web y Telegram" },
+  { emoji: "🧾", label: "Cotizaciones y solicitudes", desc: "Captura, clasificación y seguimiento automático" },
+  { emoji: "📅", label: "Agendamiento", desc: "Citas, reservas, recordatorios y confirmaciones" },
+  { emoji: "🛒", label: "Ventas y soporte", desc: "Preguntas frecuentes, pedidos y postventa" },
+  { emoji: "🗂️", label: "Procesos internos", desc: "Tareas repetitivas, validaciones y handoff al equipo" },
+  { emoji: "📈", label: "Seguimiento comercial", desc: "Leads, pipeline y reactivación de oportunidades" },
 ];
 
 const PLANS = [
   {
-    name: "Starter",
-    price: "USD 500",
+    name: "Base",
+    price: "Desde COP 1.800.000",
     features: [
-      "1 canal (WhatsApp o Telegram)",
-      "Personalidad y FAQs personalizadas",
-      "Captura de pedidos o solicitudes",
-      "14 días de acompañamiento",
+      "Automatización de 1 proceso o canal",
+      "Configuración inicial y salida en vivo",
+      "Mensajería, formularios o flujo de atención",
+      "Entrega rápida y capacitación básica",
     ],
     highlight: false,
   },
   {
-    name: "Standard",
-    price: "USD 1,000",
+    name: "Pro",
+    price: "Desde COP 3.500.000",
     features: [
-      "1 a 2 canales",
-      "Personalidad + integraciones",
-      "Captura de solicitudes + lógica de escalamiento",
-      "Sesión de onboarding con tu equipo",
-      "30 días de acompañamiento",
+      "Automatización de varios procesos o canales",
+      "Integraciones con CRM, Sheets o herramientas del negocio",
+      "Flujos con reglas, filtros y escalamiento",
+      "Capacitación del equipo y acompañamiento inicial",
     ],
     highlight: true,
   },
   {
-    name: "Premium",
-    price: "USD 1,500+",
+    name: "Soporte mensual",
+    price: "Desde COP 350.000/mes",
     features: [
-      "Configuración multicanal",
-      "Workflows avanzados",
-      "Integración con CRM o Google Sheets",
-      "Onboarding completo del equipo",
-      "30 días de acompañamiento",
+      "Monitoreo y ajustes continuos",
+      "Mejoras menores y optimización",
+      "Soporte operativo",
+      "Infraestructura y uso de IA pagados por el cliente",
     ],
     highlight: false,
   },
@@ -146,7 +144,7 @@ export default function Home() {
             className="text-sm font-semibold px-4 py-2 rounded-lg transition"
             style={{ background: "var(--hontley-accent)", color: "#fff" }}
           >
-            Agenda una llamada
+            Hablar con Pacho
           </a>
         </div>
       </nav>
@@ -156,15 +154,15 @@ export default function Home() {
           className="inline-block text-sm font-medium px-3 py-1 rounded-full mb-6"
           style={{ background: "var(--hontley-gray)", color: "var(--hontley-accent)" }}
         >
-          🇨🇴 Implementación de bots con OpenClaw en Colombia
+          🇨🇴 Automatización de procesos y canales para negocios en Colombia
         </div>
         <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6">
-          Automatiza WhatsApp,<br />
-          <span style={{ color: "var(--hontley-accent)" }}>atiende mejor y vende más.</span>
+          Menos operación manual,<br />
+          <span style={{ color: "var(--hontley-accent)" }}>más velocidad y control.</span>
         </h1>
         <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-8" style={{ color: "var(--hontley-muted)" }}>
-          Creamos bots con OpenClaw para negocios en Colombia que responden clientes, califican leads,
-          toman pedidos, agendan citas y escalan conversaciones importantes a tu equipo.
+          Ayudamos a negocios en Colombia a automatizar procesos repetitivos y canales de comunicación,
+          para responder más rápido, ordenar mejor la operación y dejar al equipo enfocado en lo importante.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <a
@@ -172,14 +170,14 @@ export default function Home() {
             className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-base transition hover:brightness-110"
             style={{ background: "var(--hontley-accent)", color: "#fff" }}
           >
-Escríbele a Pacho por WhatsApp →
+            Escríbele a Pacho →
           </a>
           <a
             href="#how-it-works"
             className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-base transition"
             style={{ border: "1px solid var(--hontley-border)", color: "var(--hontley-muted)" }}
           >
-Ver cómo funciona
+            Ver cómo funciona
           </a>
         </div>
       </section>
@@ -201,7 +199,7 @@ Ver cómo funciona
       <section className="max-w-5xl mx-auto px-6 py-16">
         <h2 className="text-3xl font-bold text-center mb-4">Casos reales</h2>
         <p className="text-center mb-10" style={{ color: "var(--hontley-muted)" }}>
-          Bots reales, en negocios reales, resolviendo operación todos los días.
+          Soluciones reales para negocios que necesitan operar mejor y atender más rápido.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {PORTFOLIO.map((p) => (
@@ -235,7 +233,7 @@ Ver cómo funciona
       </section>
 
       <section id="how-it-works" className="max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Cómo lo montamos</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">Cómo trabajamos</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {STEPS.map((s) => (
             <div key={s.n} className="text-center space-y-3">
@@ -253,9 +251,9 @@ Ver cómo funciona
 
       <section className="py-16" style={{ background: "var(--hontley-gray)" }}>
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-4">Ideal para negocios que venden por chat</h2>
+          <h2 className="text-3xl font-bold text-center mb-4">Qué podemos automatizar</h2>
           <p className="text-center mb-10" style={{ color: "var(--hontley-muted)" }}>
-            Si hoy te llegan mensajes por WhatsApp para cotizar, comprar, reservar o resolver dudas, esto te quita carga y te ordena el embudo.
+            No se trata solo de responder mensajes. Se trata de diseñar procesos que le quiten fricción a tu operación.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {USE_CASES.map((uc) => (
@@ -274,12 +272,12 @@ Ver cómo funciona
       </section>
 
       <section className="max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-center mb-4">Planes de implementación</h2>
+        <h2 className="text-3xl font-bold text-center mb-4">Estructura de inversión</h2>
         <p className="text-center mb-2" style={{ color: "var(--hontley-muted)" }}>
-          Cobro único por implementación. Los consumos de IA y herramientas se pagan aparte.
+          Precios pensados para Colombia, con implementación en COP y costos variables fuera del fee fijo.
         </p>
         <p className="text-center text-sm mb-10" style={{ color: "var(--hontley-muted)" }}>
-          Sin cobros raros. Alcance claro y entrega rápida.
+          La infraestructura, herramientas y consumo se pagan aparte, idealmente a nombre del cliente.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {PLANS.map((p) => (
@@ -296,7 +294,7 @@ Ver cómo funciona
                   className="text-xs font-bold uppercase tracking-widest px-2 py-1 rounded-full self-start"
                   style={{ background: "var(--hontley-accent)", color: "#fff" }}
                 >
-Más popular
+                  Más popular
                 </div>
               )}
               <div>
@@ -320,30 +318,30 @@ Más popular
                     : { border: "1px solid var(--hontley-border)", color: "var(--foreground)" }
                 }
               >
-                Empezar
+                Cotizar
               </a>
             </div>
           ))}
         </div>
         <p className="text-center text-sm mt-6" style={{ color: "var(--hontley-muted)" }}>
-Si quieres optimización continua, soporte y mejoras mensuales, se cotiza aparte.
+          Si quieres un paquete administrado, se puede cotizar mensual, pero con alcance y límites claros.
         </p>
       </section>
 
       <section className="py-16 text-center" style={{ background: "var(--hontley-accent)" }}>
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-white mb-4">
-            ¿Quieres vender y atender mejor por WhatsApp?
+            ¿Quieres automatizar procesos y canales en tu negocio?
           </h2>
           <p className="text-indigo-200 mb-8">
-            Escríbele a Pacho y te mostramos qué bot montaríamos para tu negocio con OpenClaw.
+            Escríbele a Pacho y te mostramos qué se puede automatizar, cómo montarlo y cuánto costaría.
           </p>
           <a
             href={BOOKING_URL}
             className="inline-flex items-center justify-center px-8 py-4 rounded-xl font-bold text-base transition hover:brightness-110"
             style={{ background: "#fff", color: "var(--hontley-accent)" }}
           >
-Hablar por WhatsApp →
+            Hablar por WhatsApp →
           </a>
         </div>
       </section>

@@ -9,13 +9,13 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Hontley Colombia | Bots con OpenClaw para negocios",
+  title: "Hontley Colombia | Automatización de procesos y canales",
   description:
-    "Implementamos bots y asistentes con OpenClaw para negocios en Colombia, conectados a WhatsApp, Telegram y más. Listos en días, no en meses.",
+    "Ayudamos a negocios en Colombia a automatizar procesos, atención y canales de comunicación para operar mejor y crecer más rápido.",
   openGraph: {
-    title: "Hontley Colombia | Bots con OpenClaw para negocios",
+    title: "Hontley Colombia | Automatización de procesos y canales",
     description:
-      "Implementamos bots y asistentes con OpenClaw para negocios en Colombia, conectados a WhatsApp, Telegram y más. Listos en días, no en meses.",
+      "Ayudamos a negocios en Colombia a automatizar procesos, atención y canales de comunicación para operar mejor y crecer más rápido.",
     url: "https://hontley.com",
     siteName: "Hontley",
     type: "website",
