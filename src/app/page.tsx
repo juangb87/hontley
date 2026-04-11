@@ -310,7 +310,7 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="flex gap-2 mb-5">
+              <div className="flex flex-col sm:flex-row gap-2 mb-5">
                 <input
                   value={demoInput}
                   onChange={(e) => setDemoInput(e.target.value)}
@@ -321,10 +321,15 @@ export default function Home() {
                     }
                   }}
                   placeholder="> Escribe una pregunta como lo haría un cliente_"
-                  className="flex-1 rounded-md px-4 py-3 outline-none border font-mono"
+                  className="flex-1 min-w-0 rounded-md px-4 py-3 outline-none border font-mono"
                   style={{ background: "#000", color: "#fff", borderColor: "#fff" }}
                 />
-                <button type="button" onClick={() => submitQuestion(demoInput)} className="px-4 py-3 rounded-md font-semibold" style={{ background: "#fff", color: "#000" }}>
+                <button
+                  type="button"
+                  onClick={() => submitQuestion(demoInput)}
+                  className="w-full sm:w-auto shrink-0 px-4 py-3 rounded-md font-semibold"
+                  style={{ background: "#fff", color: "#000" }}
+                >
                   Enviar
                 </button>
               </div>
