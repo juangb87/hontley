@@ -173,10 +173,10 @@ export default function Home() {
       </nav>
 
       <section className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center">
           <div>
             <div className="text-sm mb-5" style={{ color: "var(--hontley-muted)" }}>01</div>
-            <h1 className="text-6xl sm:text-7xl lg:text-[86px] tracking-tight leading-[0.95] mb-5">
+            <h1 className="text-6xl sm:text-7xl lg:text-[86px] tracking-tight leading-[0.95] mb-5 font-bold">
               Chats que responden,
               <br />
               organizan y dan
@@ -184,9 +184,9 @@ export default function Home() {
               seguimiento.
             </h1>
             <p className="text-lg sm:text-xl max-w-2xl mb-8" style={{ color: "var(--hontley-muted)" }}>
-              Automatización para negocios que quieren atender mejor, mover más rápido cada solicitud y quitarle carga al equipo.
+              Agentes coordinados para atender clientes, mover tareas y hacer follow-up sin que el negocio se frene.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <a href="#demo" className="px-6 py-3.5 rounded-full text-sm font-semibold" style={{ background: "#111", color: "#fff" }}>
                 Probar demo
               </a>
@@ -194,27 +194,80 @@ export default function Home() {
                 Ver si aplica a mi negocio
               </a>
             </div>
+            <div className="flex flex-wrap gap-3 text-sm">
+              {[
+                "Responde",
+                "Organiza",
+                "Da seguimiento",
+              ].map((item) => (
+                <span key={item} className="px-4 py-2 rounded-full border" style={{ borderColor: "var(--hontley-border)", background: "rgba(255,255,255,0.65)" }}>
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div className="min-h-[280px] flex items-center justify-center">
-            <div className="relative w-[180px] h-[180px]">
-              <div className="absolute inset-[68px] rounded-full border-2" style={{ borderColor: "#111" }} />
+          <div className="rounded-[28px] border p-5 sm:p-6 overflow-hidden" style={{ borderColor: "#d8d0c4", background: "linear-gradient(180deg, #f8f4ec 0%, #efe7d9 100%)", boxShadow: "0 20px 60px rgba(0,0,0,0.08)" }}>
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <div className="text-xs uppercase tracking-[0.22em]" style={{ color: "#7e7468" }}>AI Office</div>
+                <div className="text-lg font-semibold">Agentes ejecutando tareas</div>
+              </div>
+              <div className="text-xs px-3 py-1 rounded-full border" style={{ borderColor: "#d8d0c4", background: "rgba(255,255,255,0.7)", color: "#5a5247" }}>
+                En vivo
+              </div>
+            </div>
+
+            <div className="relative rounded-[24px] border p-4 sm:p-5 min-h-[360px]" style={{ borderColor: "#ddd2c3", background: "radial-gradient(circle at top, rgba(255,255,255,0.95), rgba(241,233,220,0.95))" }}>
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] sm:text-xs" style={{ color: "#746a5e" }}>
+                <span>Subagentes coordinados</span>
+                <span>Lead → Agenda → Seguimiento</span>
+              </div>
+
+              <div className="absolute inset-x-10 top-20 bottom-14 hidden sm:block">
+                <div className="absolute left-[18%] top-[26%] h-px w-[28%] border-t border-dashed" style={{ borderColor: "#cdbda7" }} />
+                <div className="absolute left-[46%] top-[26%] h-[30%] w-px border-l border-dashed" style={{ borderColor: "#cdbda7" }} />
+                <div className="absolute left-[46%] top-[56%] h-px w-[28%] border-t border-dashed" style={{ borderColor: "#cdbda7" }} />
+              </div>
+
               {[
-                "top-0 left-1/2 -translate-x-1/2",
-                "top-6 right-6",
-                "top-1/2 right-0 -translate-y-1/2",
-                "bottom-6 right-6",
-                "bottom-0 left-1/2 -translate-x-1/2",
-                "bottom-6 left-6",
-                "top-1/2 left-0 -translate-y-1/2",
-                "top-6 left-6",
-              ].map((position, i) => (
-                <div key={i} className={`absolute ${position}`}>
-                  <div className="w-4 h-4 rounded-full border-2" style={{ borderColor: "#111", background: "#f7f4ee" }} />
+                { title: "Leads", note: "Nuevo lead", className: "left-[6%] top-[18%]", accent: "#7c3aed" },
+                { title: "Agenda", note: "Reserva agendada", className: "left-[38%] top-[18%]", accent: "#2563eb" },
+                { title: "Soporte", note: "Seguimiento enviado", className: "left-[70%] top-[48%]", accent: "#f97316" },
+              ].map((station) => (
+                <div
+                  key={station.title}
+                  className={`absolute ${station.className} w-[110px] sm:w-[128px] rounded-2xl border p-3 sm:p-4`}
+                  style={{ borderColor: "#d8d0c4", background: "rgba(255,255,255,0.78)", boxShadow: `0 0 0 1px ${station.accent}22, 0 16px 30px rgba(0,0,0,0.05)` }}
+                >
+                  <div className="w-3 h-3 rounded-full mb-3" style={{ background: station.accent, boxShadow: `0 0 18px ${station.accent}66` }} />
+                  <div className="text-sm font-semibold">{station.title}</div>
+                  <div className="text-[11px] sm:text-xs mt-1" style={{ color: "#746a5e" }}>{station.note}</div>
                 </div>
               ))}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full" style={{ background: "#111" }} />
+
+              {[
+                { className: "left-[30%] top-[26%]", delay: "0s" },
+                { className: "left-[52%] top-[42%]", delay: "1.2s" },
+                { className: "left-[62%] top-[70%]", delay: "2.2s" },
+              ].map((agent, index) => (
+                <div key={index} className={`absolute ${agent.className} flex flex-col items-center`}>
+                  <div className="w-5 h-5 rounded-full border-2" style={{ borderColor: "#111", background: "#fff" }} />
+                  <div className="w-px h-6" style={{ background: "#111" }} />
+                  <div className="w-6 h-3 rounded-full" style={{ background: "#111" }} />
+                </div>
+              ))}
+
+              <div className="absolute left-[8%] bottom-5 right-[8%] grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  "Lead calificado",
+                  "Reserva confirmada",
+                  "Follow-up enviado",
+                ].map((task) => (
+                  <div key={task} className="rounded-2xl border px-3 py-3 text-xs sm:text-sm" style={{ borderColor: "#d8d0c4", background: "rgba(17,17,17,0.92)", color: "#fff" }}>
+                    {task}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
