@@ -218,16 +218,20 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative rounded-[24px] border p-4 sm:p-5 min-h-[520px] sm:min-h-[360px] hero-office-scene" style={{ borderColor: "#ddd2c3", background: "radial-gradient(circle at top, rgba(255,255,255,0.95), rgba(241,233,220,0.95))" }}>
+            <div className="relative rounded-[24px] border p-4 sm:p-5 min-h-[520px] sm:min-h-[420px] hero-office-scene" style={{ borderColor: "#3b342d", background: "linear-gradient(180deg, #c7e4ff 0%, #d8c3a5 38%, #9f7b55 38%, #7a5b3d 100%)" }}>
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] sm:text-xs" style={{ color: "#746a5e" }}>
                 <span>Subagentes coordinados</span>
                 <span>Lead → Agenda → Seguimiento</span>
               </div>
 
-              <div className="absolute inset-x-10 top-20 bottom-14 hidden sm:block">
-                <div className="absolute left-[18%] top-[26%] h-px w-[28%] border-t border-dashed" style={{ borderColor: "#cdbda7" }} />
-                <div className="absolute left-[46%] top-[26%] h-[30%] w-px border-l border-dashed" style={{ borderColor: "#cdbda7" }} />
-                <div className="absolute left-[46%] top-[56%] h-px w-[28%] border-t border-dashed" style={{ borderColor: "#cdbda7" }} />
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-x-0 bottom-0 h-[42%]" style={{ background: "repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0 18px, rgba(255,255,255,0.03) 18px 36px)" }} />
+                <div className="absolute left-[8%] top-[22%] w-[22%] h-[10%] border-2 hero-voxel-block" style={{ background: "#7c5a3a", borderColor: "#4b3420" }} />
+                <div className="absolute left-[38%] top-[22%] w-[22%] h-[10%] border-2 hero-voxel-block" style={{ background: "#8a6746", borderColor: "#4b3420" }} />
+                <div className="absolute left-[68%] top-[50%] w-[20%] h-[10%] border-2 hero-voxel-block" style={{ background: "#6c4d31", borderColor: "#4b3420" }} />
+                <div className="absolute left-[18%] top-[26%] h-2 w-[28%] border-2 hidden sm:block hero-voxel-path" style={{ background: "#cab08a", borderColor: "#6f563e" }} />
+                <div className="absolute left-[46%] top-[26%] h-[30%] w-2 border-2 hidden sm:block hero-voxel-path" style={{ background: "#cab08a", borderColor: "#6f563e" }} />
+                <div className="absolute left-[46%] top-[56%] h-2 w-[28%] border-2 hidden sm:block hero-voxel-path" style={{ background: "#cab08a", borderColor: "#6f563e" }} />
               </div>
 
               {[
@@ -237,10 +241,10 @@ export default function Home() {
               ].map((station) => (
                 <div
                   key={station.title}
-                  className={`absolute ${station.className} w-[92px] sm:w-[128px] rounded-2xl border p-3 sm:p-4 hero-station hero-station-${station.title.toLowerCase()}`}
-                  style={{ borderColor: "#d8d0c4", background: "rgba(255,255,255,0.78)", boxShadow: `0 0 0 1px ${station.accent}22, 0 16px 30px rgba(0,0,0,0.05)`, animationDelay: station.title === "Leads" ? "0s" : station.title === "Agenda" ? "1.2s" : "2.4s" }}
+                  className={`absolute ${station.className} w-[92px] sm:w-[128px] border-2 p-3 sm:p-4 hero-station hero-station-${station.title.toLowerCase()}`}
+                  style={{ borderColor: "#35271b", background: "rgba(255,255,255,0.12)", boxShadow: `6px 6px 0 #00000022, 0 0 0 1px ${station.accent}22`, animationDelay: station.title === "Leads" ? "0s" : station.title === "Agenda" ? "1.2s" : "2.4s" }}
                 >
-                  <div className="w-3 h-3 rounded-full mb-3 hero-station-dot" style={{ background: station.accent, boxShadow: `0 0 18px ${station.accent}66`, animationDelay: station.title === "Leads" ? "0s" : station.title === "Agenda" ? "1.2s" : "2.4s" }} />
+                  <div className="w-4 h-4 mb-3 hero-station-dot border" style={{ background: station.accent, borderColor: "#1f1f1f", boxShadow: `0 0 18px ${station.accent}66`, animationDelay: station.title === "Leads" ? "0s" : station.title === "Agenda" ? "1.2s" : "2.4s" }} />
                   <div className="text-sm font-semibold">{station.title}</div>
                   <div className="text-[11px] sm:text-xs mt-1" style={{ color: "#746a5e" }}>{station.note}</div>
                 </div>
@@ -252,9 +256,9 @@ export default function Home() {
                 { className: "left-[62%] top-[70%]", delay: "2.2s" },
               ].map((agent, index) => (
                 <div key={index} className={`absolute ${agent.className} flex flex-col items-center hero-agent hero-agent-${index + 1}`}>
-                  <div className="w-5 h-5 rounded-full border-2" style={{ borderColor: "#111", background: "#fff" }} />
-                  <div className="w-px h-6" style={{ background: "#111" }} />
-                  <div className="w-6 h-3 rounded-full" style={{ background: "#111" }} />
+                  <div className="w-6 h-6 border-2" style={{ borderColor: "#111", background: "#f8d9b6" }} />
+                  <div className="w-8 h-8 border-x-2 border-b-2" style={{ borderColor: "#111", background: index === 0 ? "#7c3aed" : index === 1 ? "#2563eb" : "#f97316" }} />
+                  <div className="w-3 h-5 border-x-2" style={{ borderColor: "#111", background: "#111" }} />
                 </div>
               ))}
 
@@ -264,88 +268,8 @@ export default function Home() {
                   "Reserva confirmada",
                   "Follow-up enviado",
                 ].map((task) => (
-                  <div key={task} className="rounded-2xl border px-3 py-3 text-xs sm:text-sm hero-task-card" style={{ borderColor: "#d8d0c4", background: "rgba(17,17,17,0.92)", color: "#fff", animationDelay: task === "Lead calificado" ? "0s" : task === "Reserva confirmada" ? "1.4s" : "2.8s" }}>
+                  <div key={task} className="border-2 px-3 py-3 text-xs sm:text-sm hero-task-card" style={{ borderColor: "#35271b", background: "rgba(34,20,10,0.92)", color: "#fff", boxShadow: "5px 5px 0 rgba(0,0,0,0.2)", animationDelay: task === "Lead calificado" ? "0s" : task === "Reserva confirmada" ? "1.4s" : "2.8s" }}>
                     {task}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t" style={{ borderColor: "var(--hontley-border)" }}>
-        <div className="max-w-6xl mx-auto px-6 py-14 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 items-center">
-          <div>
-            <div className="text-sm mb-4" style={{ color: "var(--hontley-muted)" }}>02</div>
-            <h2 className="text-4xl sm:text-5xl tracking-tight mb-4">Workspace visual de agentes</h2>
-            <p className="text-lg mb-6" style={{ color: "var(--hontley-muted)" }}>
-              Una representación visual del sistema trabajando en paralelo. No es un dashboard técnico, es una forma clara de mostrar cómo varios agentes pueden responder, organizar y dar seguimiento al mismo tiempo.
-            </p>
-            <div className="space-y-3 text-sm sm:text-base" style={{ color: "var(--hontley-muted)" }}>
-              <div>• Leads entrando y siendo clasificados</div>
-              <div>• Citas, reservas o tareas moviéndose entre estaciones</div>
-              <div>• Seguimientos disparados sin perder contexto</div>
-            </div>
-          </div>
-
-          <div className="rounded-[28px] border p-5 sm:p-6 fake-workspace-shell" style={{ borderColor: "#1f1f1f", background: "#050505", color: "#fff", boxShadow: "0 24px 70px rgba(0,0,0,0.22)" }}>
-            <div className="flex items-center justify-between gap-4 flex-wrap mb-5">
-              <div>
-                <div className="text-xs uppercase tracking-[0.22em]" style={{ color: "#8f8f8f" }}>Live workspace</div>
-                <h3 className="text-2xl font-semibold">Agentes trabajando en paralelo</h3>
-              </div>
-              <div className="text-xs px-3 py-1 rounded-full border" style={{ borderColor: "#333", background: "#111", color: "#cfcfcf" }}>
-                Visual demo
-              </div>
-            </div>
-
-            <div className="relative rounded-[24px] border min-h-[420px] p-4 sm:p-5 fake-workspace-scene" style={{ borderColor: "#222", background: "radial-gradient(circle at top, rgba(20,20,20,0.95), rgba(6,6,6,1))" }}>
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] sm:text-xs" style={{ color: "#8f8f8f" }}>
-                <span>Monitoreo visual del flujo</span>
-                <span>Inbox → Clasificación → Acción</span>
-              </div>
-
-              <div className="absolute inset-x-[12%] top-[23%] h-px border-t border-dashed hidden sm:block" style={{ borderColor: "#2f2f2f" }} />
-              <div className="absolute left-[50%] top-[23%] h-[38%] w-px border-l border-dashed hidden sm:block" style={{ borderColor: "#2f2f2f" }} />
-              <div className="absolute left-[50%] top-[61%] w-[24%] h-px border-t border-dashed hidden sm:block" style={{ borderColor: "#2f2f2f" }} />
-
-              {[
-                { title: "Inbox", note: "Nuevos chats", pos: "left-[8%] top-[18%]", dot: "#22c55e" },
-                { title: "Clasificación", note: "Lead calificado", pos: "left-[38%] top-[18%]", dot: "#38bdf8" },
-                { title: "Acción", note: "Seguimiento listo", pos: "left-[66%] top-[56%]", dot: "#f97316" },
-              ].map((node, index) => (
-                <div
-                  key={node.title}
-                  className={`absolute ${node.pos} w-[100px] sm:w-[140px] rounded-2xl border p-3 sm:p-4 fake-node fake-node-${index + 1}`}
-                  style={{ borderColor: "#2d2d2d", background: "rgba(255,255,255,0.04)", animationDelay: `${index * 1.1}s` }}
-                >
-                  <div className="w-3 h-3 rounded-full mb-3 fake-node-dot" style={{ background: node.dot, boxShadow: `0 0 18px ${node.dot}88`, animationDelay: `${index * 1.1}s` }} />
-                  <div className="text-sm sm:text-base font-semibold">{node.title}</div>
-                  <div className="text-[11px] sm:text-xs mt-1" style={{ color: "#a3a3a3" }}>{node.note}</div>
-                </div>
-              ))}
-
-              {[
-                { pos: "left-[26%] top-[26%]" },
-                { pos: "left-[54%] top-[42%]" },
-                { pos: "left-[46%] top-[70%]" },
-              ].map((worker, index) => (
-                <div key={index} className={`absolute ${worker.pos} flex flex-col items-center fake-worker fake-worker-${index + 1}`}>
-                  <div className="w-5 h-5 rounded-full border-2" style={{ borderColor: "#fff", background: "#111" }} />
-                  <div className="w-px h-6" style={{ background: "#fff" }} />
-                  <div className="w-6 h-3 rounded-full" style={{ background: "#fff" }} />
-                </div>
-              ))}
-
-              <div className="absolute left-[8%] right-[8%] bottom-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {[
-                  "Nuevo lead recibido",
-                  "Cliente priorizado",
-                  "Follow-up enviado",
-                ].map((item, index) => (
-                  <div key={item} className={`rounded-2xl border px-3 py-3 text-xs sm:text-sm fake-feed-card fake-feed-card-${index + 1}`} style={{ borderColor: "#2a2a2a", background: "rgba(255,255,255,0.06)", animationDelay: `${index * 1.2}s` }}>
-                    {item}
                   </div>
                 ))}
               </div>
@@ -656,56 +580,11 @@ export default function Home() {
           50% { transform: translateY(-4px); opacity: 1; }
           80% { opacity: 0.8; }
         }
-        .fake-workspace-scene::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(255,255,255,0.04), transparent 30%, transparent 70%, rgba(255,255,255,0.03));
-          pointer-events: none;
+        .hero-voxel-block {
+          box-shadow: 6px 6px 0 rgba(0,0,0,0.18);
         }
-        .fake-node {
-          animation: fakeNodePulse 5s ease-in-out infinite;
-        }
-        .fake-node-dot {
-          animation: fakeDotGlow 2.2s ease-in-out infinite;
-        }
-        .fake-worker {
-          animation: fakeWorkerMove 6.5s ease-in-out infinite;
-        }
-        .fake-feed-card {
-          animation: fakeFeedPulse 4.5s ease-in-out infinite;
-        }
-        .fake-worker-1 { animation-delay: 0s; }
-        .fake-worker-2 { animation-delay: 1.3s; }
-        .fake-worker-3 { animation-delay: 2.6s; }
-        @keyframes fakeNodePulse {
-          0%, 100% { transform: scale(1); opacity: 0.92; }
-          50% { transform: scale(1.03); opacity: 1; }
-        }
-        @keyframes fakeDotGlow {
-          0%, 100% { transform: scale(1); opacity: 0.8; }
-          50% { transform: scale(1.35); opacity: 1; }
-        }
-        @keyframes fakeWorkerMove {
-          0%, 100% { transform: translate3d(0, 0, 0); }
-          25% { transform: translate3d(8px, -8px, 0); }
-          50% { transform: translate3d(14px, 5px, 0); }
-          75% { transform: translate3d(4px, 10px, 0); }
-        }
-        @keyframes fakeFeedPulse {
-          0%, 100% { transform: translateY(0); opacity: 0.7; }
-          50% { transform: translateY(-5px); opacity: 1; }
-        }
-        @media (max-width: 639px) {
-          .fake-workspace-scene {
-            min-height: 520px;
-          }
-          .fake-node-1 { left: 8% !important; top: 18% !important; }
-          .fake-node-2 { left: 36% !important; top: 18% !important; }
-          .fake-node-3 { left: 62% !important; top: 52% !important; }
-          .fake-worker-1 { left: 28% !important; top: 28% !important; }
-          .fake-worker-2 { left: 54% !important; top: 44% !important; }
-          .fake-worker-3 { left: 46% !important; top: 72% !important; }
+        .hero-voxel-path {
+          box-shadow: 4px 4px 0 rgba(0,0,0,0.12);
         }
       `}</style>
 
