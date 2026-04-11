@@ -218,7 +218,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative rounded-[24px] border p-4 sm:p-5 min-h-[360px] hero-office-scene" style={{ borderColor: "#ddd2c3", background: "radial-gradient(circle at top, rgba(255,255,255,0.95), rgba(241,233,220,0.95))" }}>
+            <div className="relative rounded-[24px] border p-4 sm:p-5 min-h-[520px] sm:min-h-[360px] hero-office-scene" style={{ borderColor: "#ddd2c3", background: "radial-gradient(circle at top, rgba(255,255,255,0.95), rgba(241,233,220,0.95))" }}>
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] sm:text-xs" style={{ color: "#746a5e" }}>
                 <span>Subagentes coordinados</span>
                 <span>Lead → Agenda → Seguimiento</span>
@@ -237,7 +237,7 @@ export default function Home() {
               ].map((station) => (
                 <div
                   key={station.title}
-                  className={`absolute ${station.className} w-[110px] sm:w-[128px] rounded-2xl border p-3 sm:p-4 hero-station`}
+                  className={`absolute ${station.className} w-[92px] sm:w-[128px] rounded-2xl border p-3 sm:p-4 hero-station hero-station-${station.title.toLowerCase()}`}
                   style={{ borderColor: "#d8d0c4", background: "rgba(255,255,255,0.78)", boxShadow: `0 0 0 1px ${station.accent}22, 0 16px 30px rgba(0,0,0,0.05)`, animationDelay: station.title === "Leads" ? "0s" : station.title === "Agenda" ? "1.2s" : "2.4s" }}
                 >
                   <div className="w-3 h-3 rounded-full mb-3 hero-station-dot" style={{ background: station.accent, boxShadow: `0 0 18px ${station.accent}66`, animationDelay: station.title === "Leads" ? "0s" : station.title === "Agenda" ? "1.2s" : "2.4s" }} />
@@ -258,7 +258,7 @@ export default function Home() {
                 </div>
               ))}
 
-              <div className="absolute left-[8%] bottom-5 right-[8%] grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="absolute left-[8%] bottom-5 right-[8%] grid grid-cols-1 sm:grid-cols-3 gap-3 hero-task-grid">
                 {[
                   "Lead calificado",
                   "Reserva confirmada",
@@ -480,6 +480,54 @@ export default function Home() {
       </section>
 
       <style jsx>{`
+        .hero-office-scene::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.14), transparent 35%, transparent 65%, rgba(255,255,255,0.08));
+          pointer-events: none;
+        }
+        @media (max-width: 639px) {
+          .hero-office {
+            padding: 1rem;
+          }
+          .hero-office-scene {
+            min-height: 520px;
+          }
+          .hero-station-leads {
+            left: 6% !important;
+            top: 18% !important;
+          }
+          .hero-station-agenda {
+            left: 38% !important;
+            top: 18% !important;
+          }
+          .hero-station-soporte {
+            left: 62% !important;
+            top: 50% !important;
+          }
+          .hero-task-grid {
+            left: 6% !important;
+            right: 6% !important;
+            bottom: 1rem !important;
+          }
+          .hero-task-card {
+            font-size: 0.8rem;
+            padding: 0.8rem 0.9rem;
+          }
+          .hero-agent-1 {
+            left: 28% !important;
+            top: 29% !important;
+          }
+          .hero-agent-2 {
+            left: 52% !important;
+            top: 45% !important;
+          }
+          .hero-agent-3 {
+            left: 48% !important;
+            top: 72% !important;
+          }
+        }
         .hero-office-scene::after {
           content: "";
           position: absolute;
