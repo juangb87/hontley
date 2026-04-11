@@ -122,13 +122,20 @@ const DEMO_SHOWCASE = [
 
 type DemoKey = "restaurante" | "inmobiliaria" | "clinica";
 
+type KnowledgeDoc = {
+  title: string;
+  text: string;
+  keywords: string[];
+};
+
 type DemoConfig = {
   label: string;
   badge: string;
   intro: string;
   placeholder: string;
   questions: string[];
-  answers: (name: string, business: string) => Record<string, string>;
+  docs: KnowledgeDoc[];
+  fallback: string;
 };
 
 const DEMOS: Record<DemoKey, DemoConfig> = {
@@ -142,11 +149,24 @@ const DEMOS: Record<DemoKey, DemoConfig> = {
       "¿Hacen domicilios en esta zona?",
       "Quiero reservar para 4 personas hoy a las 8 pm",
     ],
-    answers: (name, business) => ({
-      "¿Cuál es el menú de hoy?": `Hola ${name || ""}, soy el asistente de ${business || "tu restaurante"}. Hoy tenemos menú ejecutivo con sopa, proteína a elección, arroz, ensalada y bebida. Si quieres, también te muestro opciones a la carta o te ayudo a pedir.`,
-      "¿Hacen domicilios en esta zona?": `Sí, ${business || "el negocio"} maneja domicilios según cobertura y horario. Si me compartes tu barrio o ubicación, valido disponibilidad y te digo el tiempo estimado de entrega.`,
-      "Quiero reservar para 4 personas hoy a las 8 pm": `Perfecto. Te ayudo con esa reserva para 4 personas. Solo necesito tu nombre y número de contacto para dejarla registrada y enviarte confirmación.`,
-    }),
+    docs: [
+      {
+        title: "Menú y atención",
+        text: "El restaurante ofrece menú ejecutivo, opciones a la carta, atención por chat, preguntas sobre ingredientes, horarios y recomendaciones según el cliente.",
+        keywords: ["menu", "carta", "platos", "almuerzo", "comida", "ingredientes"],
+      },
+      {
+        title: "Domicilios y cobertura",
+        text: "Los domicilios se confirman según zona de cobertura, horario y volumen de pedidos. Se puede pedir ubicación, barrio y tiempo estimado de entrega antes de confirmar.",
+        keywords: ["domicilio", "envio", "zona", "cobertura", "barrio", "entrega"],
+      },
+      {
+        title: "Reservas",
+        text: "Las reservas piden nombre, número de contacto, cantidad de personas, fecha y hora. Luego se confirma disponibilidad y se envía mensaje de confirmación.",
+        keywords: ["reserva", "mesa", "personas", "hora", "agendar", "booking"],
+      },
+    ],
+    fallback: "Puedo ayudarte con menú, domicilios, reservas o preguntas frecuentes. Si quieres, prueba una pregunta más concreta y te muestro cómo respondería el sistema.",
   },
   inmobiliaria: {
     label: "Inmobiliaria",
@@ -158,11 +178,24 @@ const DEMOS: Record<DemoKey, DemoConfig> = {
       "¿Qué documentos necesito para arrendar?",
       "Quiero agendar una visita esta semana",
     ],
-    answers: (name, business) => ({
-      "Busco apartamento en arriendo en Medellín": `Hola ${name || ""}, con gusto te ayudo desde ${business || "la inmobiliaria"}. Para mostrarte opciones necesito zona de interés, presupuesto aproximado y número de habitaciones. Con eso te filtro opciones rápido.`,
-      "¿Qué documentos necesito para arrendar?": `Normalmente te pediríamos documento, soporte de ingresos y algunos datos del codeudor o respaldo. Si quieres, te paso el checklist completo y te digo qué aplica para tu caso.`,
-      "Quiero agendar una visita esta semana": `Claro. Te ayudo a coordinar la visita. Dime qué inmueble te interesa o qué horarios te sirven y te propongo disponibilidad para esta semana.`,
-    }),
+    docs: [
+      {
+        title: "Búsqueda de inmuebles",
+        text: "Para recomendar inmuebles conviene preguntar ciudad, zona, presupuesto, número de habitaciones y si busca arriendo o compra. Luego se filtran opciones y se comparte el siguiente paso.",
+        keywords: ["apartamento", "casa", "arriendo", "compra", "medellin", "zona", "presupuesto"],
+      },
+      {
+        title: "Documentos",
+        text: "El proceso de arrendamiento normalmente pide documento, soportes de ingresos, datos de codeudor o respaldo y validación del perfil del interesado.",
+        keywords: ["documentos", "requisitos", "papeles", "arrendar", "codeudor", "ingresos"],
+      },
+      {
+        title: "Agenda de visitas",
+        text: "Para agendar visitas se pide el inmueble de interés o necesidad del cliente, horarios disponibles y datos de contacto para confirmación.",
+        keywords: ["visita", "agendar", "cita", "horario", "inmueble", "ver"],
+      },
+    ],
+    fallback: "Puedo ayudarte con búsqueda de inmuebles, requisitos o agendamiento de visitas. Hazme una pregunta puntual y te muestro cómo respondería el demo.",
   },
   clinica: {
     label: "Clínica estética",
@@ -174,12 +207,30 @@ const DEMOS: Record<DemoKey, DemoConfig> = {
       "¿Cuánto cuesta una valoración?",
       "Quiero agendar una cita para este sábado",
     ],
-    answers: (name, business) => ({
-      "¿Qué tratamientos tienen para rejuvenecimiento facial?": `Hola ${name || ""}, en ${business || "la clínica"} podemos orientarte sobre opciones de rejuvenecimiento facial según tu objetivo. Normalmente el proceso empieza con una valoración para recomendar el tratamiento adecuado.`,
-      "¿Cuánto cuesta una valoración?": `La valoración depende del tipo de procedimiento y de la agenda disponible. Si quieres, te tomo unos datos y te confirmo el valor junto con los horarios disponibles.`,
-      "Quiero agendar una cita para este sábado": `Perfecto. Te ayudo a agendar. Solo necesito tu nombre completo, número de contacto y si prefieres mañana o tarde para proponerte los horarios del sábado.`,
-    }),
+    docs: [
+      {
+        title: "Tratamientos",
+        text: "La clínica atiende preguntas sobre tratamientos faciales, corporales y valoración inicial. El sistema orienta sin diagnosticar y dirige hacia una valoración profesional.",
+        keywords: ["tratamiento", "facial", "corporal", "rejuvenecimiento", "botox", "piel"],
+      },
+      {
+        title: "Valoraciones y costos",
+        text: "Las valoraciones pueden tener costo según servicio, agenda y disponibilidad. Lo ideal es tomar datos del prospecto y confirmar el valor según el caso.",
+        keywords: ["precio", "costo", "valoracion", "cuanto", "tarifa", "consulta"],
+      },
+      {
+        title: "Agenda",
+        text: "Para agendar cita se debe pedir nombre completo, número de contacto, tratamiento de interés y horario preferido para confirmar disponibilidad.",
+        keywords: ["agendar", "cita", "sabado", "horario", "reserva", "valoracion"],
+      },
+    ],
+    fallback: "Puedo ayudarte con tratamientos, valoraciones o agenda. Pregúntame algo concreto y te muestro cómo respondería el demo.",
   },
+};
+
+type ChatMessage = {
+  role: "user" | "assistant";
+  text: string;
 };
 
 function DarkModeToggle({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
@@ -195,12 +246,49 @@ function DarkModeToggle({ dark, onToggle }: { dark: boolean; onToggle: () => voi
   );
 }
 
+function normalize(text: string) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ");
+}
+
+function retrieveAnswer(question: string, config: DemoConfig, name: string, business: string) {
+  const normalizedQuestion = normalize(question);
+  const scoredDocs = config.docs
+    .map((doc) => {
+      const keywordHits = doc.keywords.reduce((acc, keyword) => {
+        const normalizedKeyword = normalize(keyword);
+        return acc + (normalizedQuestion.includes(normalizedKeyword) ? 2 : 0);
+      }, 0);
+
+      const textHits = normalize(doc.text)
+        .split(/\s+/)
+        .filter((word) => word.length > 3 && normalizedQuestion.includes(word)).length;
+
+      return { doc, score: keywordHits + textHits };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  const best = scoredDocs[0];
+  const businessName = business || "tu negocio";
+  const userName = name ? `${name}, ` : "";
+
+  if (!best || best.score <= 0) {
+    return `Hola ${userName}soy el asistente de ${businessName}. ${config.fallback}`;
+  }
+
+  return `Hola ${userName}soy el asistente de ${businessName}. ${best.doc.text}`;
+}
+
 export default function Home() {
   const [dark, setDark] = useState(false);
   const [demoType, setDemoType] = useState<DemoKey>("restaurante");
   const [demoName, setDemoName] = useState("");
   const [demoBusiness, setDemoBusiness] = useState("");
-  const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
+  const [demoInput, setDemoInput] = useState("");
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem("hontley-dark");
@@ -218,8 +306,11 @@ export default function Home() {
   };
 
   const demoConfig = DEMOS[demoType];
-  const demoAnswers = useMemo(() => demoConfig.answers(demoName.trim(), demoBusiness.trim()), [demoBusiness, demoConfig, demoName]);
-  const activeAnswer = selectedQuestion ? demoAnswers[selectedQuestion] : null;
+
+  useEffect(() => {
+    setChatMessages([]);
+    setDemoInput("");
+  }, [demoType]);
 
   const whatsappHref = useMemo(() => {
     const business = demoBusiness.trim() || "mi negocio";
@@ -228,6 +319,20 @@ export default function Home() {
       `Hola Pacho, acabo de probar el demo de ${label} para ${business} y quiero cotizar una automatización para mi negocio.`
     )}`;
   }, [demoBusiness, demoType]);
+
+  const submitQuestion = (question: string) => {
+    const cleanQuestion = question.trim();
+    if (!cleanQuestion) return;
+
+    const answer = retrieveAnswer(cleanQuestion, demoConfig, demoName.trim(), demoBusiness.trim());
+
+    setChatMessages((prev) => [
+      ...prev,
+      { role: "user", text: cleanQuestion },
+      { role: "assistant", text: answer },
+    ]);
+    setDemoInput("");
+  };
 
   return (
     <main className="min-h-screen" style={{ background: "var(--background)", color: "var(--foreground)" }}>
@@ -350,11 +455,11 @@ export default function Home() {
               className="inline-block text-sm font-medium px-3 py-1 rounded-full mb-4"
               style={{ background: "var(--background)", color: "var(--hontley-accent)" }}
             >
-              Demo interactivo
+              Demo interactivo con base de conocimiento
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Prueba cómo se vería una automatización para tu negocio</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Haz preguntas reales y mira cómo respondería el sistema</h2>
             <p style={{ color: "var(--hontley-muted)" }}>
-              Elige un tipo de negocio, pon tu nombre y haz hasta 3 preguntas. No es humo. Es una muestra rápida de cómo podría responder tu sistema.
+              Esto ya no es solo un mock. El demo busca respuestas dentro de una mini base de conocimiento por vertical para que se sienta más aterrizado.
             </p>
           </div>
 
@@ -369,10 +474,7 @@ export default function Home() {
                       <button
                         key={key}
                         type="button"
-                        onClick={() => {
-                          setDemoType(key);
-                          setSelectedQuestion(null);
-                        }}
+                        onClick={() => setDemoType(key)}
                         className="rounded-xl px-3 py-3 text-left text-sm font-medium transition"
                         style={{
                           background: demoType === key ? "var(--hontley-accent)" : "var(--hontley-gray)",
@@ -429,10 +531,10 @@ export default function Home() {
               <div className="flex items-center justify-between gap-4 flex-wrap mb-5">
                 <div>
                   <h3 className="text-xl font-bold">Chat demo</h3>
-                  <p className="text-sm" style={{ color: "var(--hontley-muted)" }}>Haz clic en una pregunta sugerida para ver cómo respondería.</p>
+                  <p className="text-sm" style={{ color: "var(--hontley-muted)" }}>Puedes usar preguntas sugeridas o escribir la tuya.</p>
                 </div>
                 <div className="text-xs px-3 py-1 rounded-full" style={{ background: "var(--hontley-gray)", color: "var(--hontley-accent)" }}>
-                  Demo MVP, 3 preguntas
+                  Mini RAG local MVP
                 </div>
               </div>
 
@@ -441,21 +543,21 @@ export default function Home() {
                   {demoBusiness.trim() || demoConfig.label} Assistant
                 </div>
                 <p className="text-sm" style={{ color: "var(--hontley-muted)" }}>
-                  Hola {demoName.trim() || ""}{demoName.trim() ? "," : ""} esta es una simulación simple de cómo podría atender una automatización para {demoBusiness.trim() || "tu negocio"}.
+                  Hola {demoName.trim() || ""}{demoName.trim() ? "," : ""} esta demo responde buscando información dentro de una base de conocimiento simple por vertical.
                 </p>
               </div>
 
-              <div className="space-y-3 mb-5">
+              <div className="space-y-3 mb-4">
                 {demoConfig.questions.map((question) => (
                   <button
                     key={question}
                     type="button"
-                    onClick={() => setSelectedQuestion(question)}
+                    onClick={() => submitQuestion(question)}
                     className="w-full text-left rounded-2xl px-4 py-3 transition"
                     style={{
-                      background: selectedQuestion === question ? "var(--hontley-accent)" : "var(--hontley-gray)",
-                      color: selectedQuestion === question ? "#fff" : "var(--foreground)",
-                      border: selectedQuestion === question ? "1px solid var(--hontley-accent)" : "1px solid var(--hontley-border)",
+                      background: "var(--hontley-gray)",
+                      color: "var(--foreground)",
+                      border: "1px solid var(--hontley-border)",
                     }}
                   >
                     {question}
@@ -463,32 +565,52 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="space-y-4 min-h-[220px]">
-                {selectedQuestion ? (
-                  <>
-                    <div className="flex justify-end">
-                      <div
-                        className="max-w-[85%] rounded-2xl px-4 py-3 text-sm"
-                        style={{ background: "var(--hontley-accent)", color: "#fff" }}
-                      >
-                        {selectedQuestion}
-                      </div>
-                    </div>
-                    <div className="flex justify-start">
+              <div className="flex gap-2 mb-5">
+                <input
+                  value={demoInput}
+                  onChange={(e) => setDemoInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      submitQuestion(demoInput);
+                    }
+                  }}
+                  placeholder="Escribe una pregunta como lo haría un cliente"
+                  className="flex-1 rounded-xl px-4 py-3 outline-none"
+                  style={{ background: "var(--hontley-gray)", border: "1px solid var(--hontley-border)" }}
+                />
+                <button
+                  type="button"
+                  onClick={() => submitQuestion(demoInput)}
+                  className="px-4 py-3 rounded-xl font-semibold"
+                  style={{ background: "var(--hontley-accent)", color: "#fff" }}
+                >
+                  Enviar
+                </button>
+              </div>
+
+              <div className="space-y-4 min-h-[260px]">
+                {chatMessages.length > 0 ? (
+                  chatMessages.map((message, index) => (
+                    <div key={`${message.role}-${index}`} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                       <div
                         className="max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed"
-                        style={{ background: "var(--hontley-gray)", color: "var(--foreground)", border: "1px solid var(--hontley-border)" }}
+                        style={
+                          message.role === "user"
+                            ? { background: "var(--hontley-accent)", color: "#fff" }
+                            : { background: "var(--hontley-gray)", color: "var(--foreground)", border: "1px solid var(--hontley-border)" }
+                        }
                       >
-                        {activeAnswer}
+                        {message.text}
                       </div>
                     </div>
-                  </>
+                  ))
                 ) : (
                   <div
                     className="h-full rounded-2xl p-5 text-sm flex items-center justify-center text-center"
                     style={{ background: "var(--hontley-gray)", color: "var(--hontley-muted)", border: "1px dashed var(--hontley-border)" }}
                   >
-                    Selecciona una pregunta sugerida y te mostramos una respuesta demo personalizada con tu nombre y negocio.
+                    Haz una pregunta sugerida o escribe la tuya. El demo buscará la mejor respuesta dentro de una mini base de conocimiento por vertical.
                   </div>
                 )}
               </div>
