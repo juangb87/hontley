@@ -123,6 +123,7 @@ export default function Home() {
   const [demoInput, setDemoInput] = useState("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [activeAgent, setActiveAgent] = useState<number | null>(null);
+  const [rotatingAgent, setRotatingAgent] = useState(0);
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
@@ -134,6 +135,13 @@ export default function Home() {
     setChatMessages([]);
     setDemoInput("");
   }, [demoType]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingAgent((current) => (current + 1) % 3);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
 
   const whatsappHref = useMemo(() => {
     const business = demoBusiness.trim() || "mi negocio";
@@ -271,7 +279,7 @@ export default function Home() {
                   <span className="mt-2 text-[10px] sm:text-[11px] font-semibold px-2 py-1 border hero-agent-label" style={{ borderColor: "#3b342d", background: "rgba(255,255,255,0.75)", color: "#2c241d" }}>
                     {agent.label}
                   </span>
-                  {activeAgent === index ? (
+                  {activeAgent === index || (activeAgent === null && rotatingAgent === index) ? (
                     <span className="absolute left-1/2 top-full mt-3 -translate-x-1/2 w-[140px] sm:w-[170px] border-2 px-3 py-2 text-[10px] sm:text-xs text-left hero-agent-tooltip" style={{ borderColor: "#35271b", background: "rgba(34,20,10,0.96)", color: "#fff", boxShadow: "6px 6px 0 rgba(0,0,0,0.22)" }}>
                       {agent.msg}
                     </span>
