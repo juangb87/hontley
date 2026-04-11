@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import { FiDollarSign, FiGrid, FiMessageSquare, FiSend, FiSettings, FiShoppingBag, FiUserCheck } from "react-icons/fi";
 
 const BOOKING_URL = "https://wa.me/573106460010?text=Hola%20Pacho%2C%20quiero%20informaci%C3%B3n%20sobre%20automatizaci%C3%B3n%20de%20procesos%20y%20canales%20para%20mi%20negocio";
 const CONTACT_LABEL = "WhatsApp: +57 310 6460010";
@@ -37,14 +38,17 @@ const BENEFITS = [
   {
     title: "Responde al instante",
     desc: "Atiende preguntas, solicitudes y mensajes sin dejar todo en visto.",
+    icon: FiMessageSquare,
   },
   {
     title: "Filtra y organiza",
     desc: "Clasifica leads, pedidos o citas y mueve cada caso al siguiente paso.",
+    icon: FiUserCheck,
   },
   {
     title: "Le quita carga al equipo",
     desc: "Menos tareas repetitivas, más foco en cerrar y operar mejor.",
+    icon: FiSettings,
   },
 ];
 
@@ -52,14 +56,17 @@ const PLANS = [
   {
     name: "Base",
     price: "Desde COP 1.800.000",
+    icon: FiGrid,
   },
   {
     name: "Pro",
     price: "Desde COP 3.500.000",
+    icon: FiShoppingBag,
   },
   {
     name: "Soporte mensual",
     price: "Desde COP 350.000/mes",
+    icon: FiDollarSign,
   },
 ];
 
@@ -345,7 +352,10 @@ export default function Home() {
                 </div>
 
                 <div className="rounded-2xl p-4" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(167,139,250,0.18)" }}>
-                  <div className="text-sm font-semibold mb-1" style={{ color: "#ddd6fe" }}>{demoConfig.badge}</div>
+                  <div className="flex items-center gap-2 text-sm font-semibold mb-1" style={{ color: "#ddd6fe" }}>
+                    <FiSend size={14} />
+                    {demoConfig.badge}
+                  </div>
                   <p className="text-sm" style={{ color: "var(--hontley-muted)" }}>
                     Haz una pregunta sugerida o escribe la tuya.
                   </p>
@@ -436,15 +446,26 @@ export default function Home() {
 
       <section className="max-w-6xl mx-auto px-6 pb-10 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {BENEFITS.map((item, index) => (
-            <Panel key={item.title} className="p-5">
-              <div className="text-xs font-semibold uppercase tracking-[0.25em] mb-3" style={{ color: index === 0 ? "#c4b5fd" : index === 1 ? "#93c5fd" : "#a7f3d0" }}>
-                Beneficio
-              </div>
-              <h3 className="font-bold mb-2 text-lg">{item.title}</h3>
-              <p className="text-sm" style={{ color: "var(--hontley-muted)" }}>{item.desc}</p>
-            </Panel>
-          ))}
+          {BENEFITS.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Panel key={item.title} className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div
+                    className="w-10 h-10 rounded-2xl flex items-center justify-center"
+                    style={{ background: index === 0 ? "rgba(124,58,237,0.14)" : index === 1 ? "rgba(59,130,246,0.14)" : "rgba(16,185,129,0.14)" }}
+                  >
+                    <Icon size={18} style={{ color: index === 0 ? "#c4b5fd" : index === 1 ? "#93c5fd" : "#a7f3d0" }} />
+                  </div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.25em]" style={{ color: index === 0 ? "#c4b5fd" : index === 1 ? "#93c5fd" : "#a7f3d0" }}>
+                    Beneficio
+                  </div>
+                </div>
+                <h3 className="font-bold mb-2 text-lg">{item.title}</h3>
+                <p className="text-sm" style={{ color: "var(--hontley-muted)" }}>{item.desc}</p>
+              </Panel>
+            );
+          })}
         </div>
       </section>
 
@@ -491,7 +512,9 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {PLANS.map((p, index) => (
+            {PLANS.map((p, index) => {
+              const Icon = p.icon;
+              return (
               <div
                 key={p.name}
                 className="rounded-3xl p-5"
@@ -500,10 +523,15 @@ export default function Home() {
                   background: index === 1 ? "rgba(124,58,237,0.08)" : "rgba(15,23,42,0.6)",
                 }}
               >
-                <div className="text-lg font-bold mb-2">{p.name}</div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: "rgba(124,58,237,0.12)" }}>
+                    <Icon size={18} style={{ color: "#ddd6fe" }} />
+                  </div>
+                  <div className="text-lg font-bold">{p.name}</div>
+                </div>
                 <div className="text-3xl font-extrabold">{p.price}</div>
               </div>
-            ))}
+            )})}
           </div>
         </Panel>
       </section>
