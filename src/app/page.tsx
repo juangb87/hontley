@@ -1,34 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { FiActivity, FiBarChart2, FiCpu, FiDollarSign, FiGrid, FiHeadphones, FiLayers, FiMessageSquare, FiMic, FiSend, FiSettings, FiShoppingBag, FiTool, FiUserCheck } from "react-icons/fi";
+import { FiBarChart2, FiDollarSign, FiGrid, FiHeadphones, FiMessageSquare, FiSend, FiSettings, FiShoppingBag, FiUserCheck } from "react-icons/fi";
 
 const BOOKING_URL = "https://wa.me/573106460010?text=Hola%20Oistelab%2C%20quiero%20informaci%C3%B3n%20sobre%20automatizaci%C3%B3n%20de%20procesos%20y%20canales%20para%20mi%20negocio";
 const CONTACT_LABEL = "WhatsApp: +57 310 6460010";
 const CONTACT_NAME = "Pacho";
-
-const PORTFOLIO = [
-  { name: "Arca Build", logo: "/logo-arca.jpg", url: "https://arcabuild.co", industry: "Construcción" },
-  { name: "Home Inspections Halley", logo: "/logo-halley.jpg", url: "https://homeinspectionshalley.com", industry: "Servicios inmobiliarios" },
-  { name: "Bumbei", logo: "/logo-bumbei.jpg", url: "https://bumbei.com", industry: "Fintech" },
-  { name: "Galeonica", logo: "/logo-galeonica.jpg", url: "https://galeonica.com", industry: "Fintech B2B" },
-];
-
-const BENEFITS = [
-  { title: "Menos trabajo manual", desc: "Automatiza tareas repetitivas para que el equipo deje de apagar incendios y gane tiempo operativo.", icon: FiActivity },
-  { title: "Más flujo entre tareas", desc: "Recibe, clasifica, enruta y ejecuta el siguiente paso sin perder contexto entre áreas o personas.", icon: FiLayers },
-  { title: "Más control y seguimiento", desc: "Convierte conversaciones, audios y solicitudes en procesos visibles, medibles y accionables.", icon: FiBarChart2 },
-];
-
-const AREAS = [
-  { title: "Comercial y soporte", desc: "Leads, agenda, seguimiento, soporte y atención omnicanal.", icon: FiMessageSquare },
-  { title: "Operaciones", desc: "Tareas repetitivas, handoffs, validaciones y coordinación interna.", icon: FiSettings },
-  { title: "Desarrollo e ingeniería", desc: "Triage, documentación, QA, requerimientos y seguimiento técnico.", icon: FiCpu },
-  { title: "Arquitectura y construcción", desc: "Solicitudes, levantamientos, cambios, aprobaciones y control documental.", icon: FiTool },
-  { title: "Equipos creativos", desc: "Briefs, revisiones, feedback, recordatorios y flujo de entregables.", icon: FiGrid },
-  { title: "Texto y voz", desc: "Procesa chats y audios para convertir intención en acciones útiles para el negocio.", icon: FiMic },
-];
 
 const IMPACT_METRICS = [
   { value: "-60%", label: "menos trabajo manual" },
